@@ -7,7 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
     .setName(Language.loop.command)
     .setDescription(Language.loop.description)
-    .addIntegerOption((option) => option.setName(Language.loop.name).setDescription(Language.loop.option)
+    .addIntegerOption((option) => option.setName(Language.loop.command).setDescription(Language.loop.option)
         .addChoices(
                 {name: 'queue', value: QueueRepeatMode.QUEUE},
                 {name: 'song', value: QueueRepeatMode.TRACK},
@@ -24,7 +24,10 @@ module.exports = {
             return await interaction.editReply(Language.queue.nosongs)
         } else {
             try{
-                let loopMode = interaction.options.getInteger(Language.loop.name)
+                let loopMode = interaction.options.getInteger(Language.loop.command)
+                /////////////////////
+                //console.log(loopMode)
+                /////////////////////
                 queue.setRepeatMode(loopMode)
                 const message = loopMode === QueueRepeatMode.QUEUE ? "queue" : loopMode === QueueRepeatMode.TRACK ? "song" : "stop"
                 await interaction.editReply({
